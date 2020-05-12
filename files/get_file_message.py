@@ -21,6 +21,11 @@ import datetime
 
 
 def get_all_files_url(url):
+    """
+    获取指定文件夹下的所有文件路径（递归查询）
+    :param url: 指定文件夹
+    :return: 所有文件路径
+    """
     all_urls = []
     for root, dirs, files in os.walk(url):
         if files is not None:
@@ -30,25 +35,51 @@ def get_all_files_url(url):
     return all_urls
 
 
-def time_stamp_to_time(timestamp):
-    timeStruct = time.localtime(timestamp)
-    return time.strftime('%Y-%m-%d %H:%M:%S', timeStruct)
+def time_stamp_to_time(time_stamp):
+    """
+    时间转换
+    :param time_stamp:
+    :return:
+    """
+    time_struct = time.localtime(time_stamp)
+    return time.strftime('%Y-%m-%d %H:%M:%S', time_struct)
 
 
-def get_file_size(filePath):
-    fsize = os.path.getsize(filePath)
-    fsize = fsize / 1024
-    return round(fsize, 2)
+def get_file_size(file_path):
+    """
+    获取文件大小
+    :param file_path:文件路径
+    :return:文件大小---kb
+    """
+    file_size = os.path.getsize(file_path)
+    file_size = file_size / 1024
+    return round(file_size, 2)
+
 
 def get_watch_file_time(file_url):
+    """
+    获取文件查看时间
+    :param file_url:文件路径
+    :return:转格式后的时间
+    """
     return time_stamp_to_time(os.path.getatime(file_url))
 
 
 def get_create_file_time(file_url):
+    """
+    获取文件创建时间
+    :param file_url:
+    :return:
+    """
     return time_stamp_to_time(os.path.getctime(file_url))
 
 
 def get_change_file_time(file_url):
+    """
+    获取文件更改时间
+    :param file_url:
+    :return:
+    """
     return time_stamp_to_time(os.path.getmtime(file_url))
 
 
@@ -56,4 +87,3 @@ if __name__ == '__main__':
     print(get_file_size('/Users/apple/Downloads/test/haha.txt'))
     print(get_create_file_time('/Users/apple/Downloads/test/haha.txt'))
     print(get_change_file_time('/Users/apple/Downloads/test/haha.txt'))
-
